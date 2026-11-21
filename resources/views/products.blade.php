@@ -29,5 +29,16 @@
         </tr>
     @endforeach
 </table>
+{{ $products->links() }}
+
+Элементов на странице:
+<form method="get" action="{{ url('product') }}">
+    <select name="perpage">
+        <option value="3" @selected($products->perPage() == 3)>3</option>
+        <option value="5" @selected($products->perPage() == 5)>5</option>
+        <option value="6" @selected($products->perPage() == 6)>6</option>
+    </select>
+    <input type="submit" value="Изменить">
+</form>
 </body>
 </html>

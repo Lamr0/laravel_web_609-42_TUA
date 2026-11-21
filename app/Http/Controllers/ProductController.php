@@ -9,9 +9,16 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('products', ['products' => Product::all()]);
+        $perpage = (int) $request->input('perpage', 5);
+        if (!in_array($perpage, [3, 5, 6])) {
+            $perpage = 5;
+        }
+
+        return view('products', [
+            'products' => Product::with('category')->paginate($perpage)->withQueryString(),
+        ]);
     }
 
     public function create()
